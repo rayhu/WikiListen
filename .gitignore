@@ -196,3 +196,11 @@ yarn-error.log
 
 # testing
 /coverage
+
+# build files
+android/app/src/main/assets/index.android.bundle
+android/app/src/main/res/
+
+# this may contain real password
+android/app/build.gradle
+.cred/

@@ -1,0 +1,5 @@
+version: 1.0
+
+openai:
+  chatGpt:
+    model: "gpt-3.5-turbo"

@@ -4,25 +4,24 @@ class Speaker {
   private isSpeaking: boolean;
   private sentence: string;
 
-  constructor(sentence: string | undefined) {
+  constructor(sentence?: string) {
     this.sentence = '';
     this.isSpeaking = false;
     // console.log('supported voices list:');
     // Tts.voices().then(voices => console.log(JSON.stringify(voices, '', 2)));
     Tts.setDefaultLanguage('en-US');
-    if (sentence) {
-      this.sentence = sentence;
-      Tts.getInitStatus().then(() => {
+    Tts.getInitStatus().then(() => {
+      if (sentence) {
         this.speak(sentence);
-      });
-    }
+      }
+    });
   }
 
   async getVoices() {
     return await Tts.voices();
   }
 
-  setVoice(voice) {
+  setVoice(voice?: string) {
     if (!voice) {
       return;
     }
@@ -53,7 +52,7 @@ class Speaker {
     }
   }
 
-  onSpeechFinish(event) {
+  onSpeechFinish(event: any) {
     // Handle the event here
     console.log('Speech finished', event);
   }
