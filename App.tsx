@@ -9,7 +9,9 @@ import PlayingScreen from './pages/PlayingScreen';
 import {enableScreens} from 'react-native-screens';
 import {Platform} from 'react-native';
 import OpenAI from 'openai';
-import getOpenAi from './services/chatGpt/openAiApi';
+
+import {OpenAIService} from './services/openAi/OpenAIService';
+import {ConfigurationManager} from './services/configurationManager/ConfigurationManager';
 
 const platformSpecificVoice = Platform.select({
   ios: 'com.apple.voice.compact.en-US.Samantha',
@@ -24,23 +26,26 @@ const App: React.FC = () => {
     if (SplashScreen) {
       SplashScreen.hide();
     }
-
     const speaker = new Speaker(); //('Hello, Wiki Listen!');
     speaker.setVoice(platformSpecificVoice);
 
     const fetchData = async () => {
-      // asynchronous code here, e.g., fetch data from an API
-      const openai = await getOpenAi();
-      const params: OpenAI.Chat.ChatCompletionCreateParams = {
-        messages: [{role: 'user', content: 'Say chatGpt welcomes you.'}],
-        model: 'gpt-3.5-turbo',
-      };
-      const completion: OpenAI.Chat.ChatCompletion =
-        await openai.chat.completions.create(params);
-      console.log(
-        `received completion result: ${JSON.stringify(completion, null, 2)}`,
+      await ConfigurationManager.loadConfig();
+
+      const model = ConfigurationManager.getConfig(
+        'openAi.chatGpt.defaultModel',
+        'davinci',
       );
-      completion.choices.forEach(choice => {
+
+      const openAIService = OpenAIService.getInstance();
+
+      let content = 'Say chatGpt welcomes you.';
+      let result: OpenAI.Chat.ChatCompletion =
+        await openAIService.getCompletion(content, model);
+      console.log(
+        `received completion result: ${JSON.stringify(result, null, 2)}`,
+      );
+      result.choices.forEach(choice => {
         if (choice.message.content) {
           console.log(choice);
           speaker.speak(choice.message.content);

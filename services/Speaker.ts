@@ -18,7 +18,7 @@ class Speaker {
   }
 
   async getVoices() {
-    return await Tts.voices();
+    return Tts.voices();
   }
 
   setVoice(voice?: string) {

@@ -3,5 +3,6 @@
     "cSpell.words": [
         "openai",
         "wikilisten"
-    ]
+    ],
+    "java.compile.nullAnalysis.mode": "automatic"
 }
