@@ -1,6 +1,6 @@
 # Wiki Listen
 
-A small app to read aloud wikipedia articles. 
+A small app to read aloud wikipedia articles.
 
 I did it for myself to read and listen to wikipedia articles on the go. While I enjoy using the smart phone's built-in read screen feature, they read aloud the visible text, which include citations and infobox. It is annoying. A dedicated app injects JavaScript code into the wikipedia pages to gain better control of the WebView content. The Node manipulation convert visible text into speakable text.
 

@@ -1,0 +1,8 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "cSpell.words": [
+        "openai",
+        "wikilisten"
+    ],
+    "java.compile.nullAnalysis.mode": "automatic"
+}
