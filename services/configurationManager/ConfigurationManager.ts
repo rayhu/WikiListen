@@ -1,29 +1,25 @@
 import yaml from 'js-yaml';
-import RNFS from 'react-native-fs';
 import _ from 'lodash';
 
 export class ConfigurationManager {
+  private constructor() {} // Ensure this class cannot be instantiated
+
   private static configData: any;
 
-  private constructor() {} // Ensure this class cannot be instantiated
   private static isLoaded: boolean = false;
-  public static async loadConfig(): Promise<void> {
+
+  public static async loadConfig(yamlString: string): Promise<void> {
+    if (this.isLoaded) {
+      return;
+    }
     try {
-      if (ConfigurationManager.isLoaded) {
-        return;
-      }
-      const isDebugMode = __DEV__; // __DEV__ is true in debug mode, false in release mode
-      // In debug mode, the file is serve by Metro bundler in a different path than release, make sure metro bundler can serve yml.
-      const configPath = isDebugMode
-        ? './.cred/config.yml'
-        : `${RNFS.MainBundlePath}/.cred/config.yml`;
-      const configFile = await RNFS.readFile(configPath, 'utf8');
-      ConfigurationManager.configData = yaml.load(configFile);
-      ConfigurationManager.isLoaded = true;
-      let openAiApiKey: string | undefined = process.env.OPENAI_API_KEY;
+      this.configData = yaml.load(yamlString);
+      this.isLoaded = true;
+
+      const openAiApiKey = process.env.OPENAI_API_KEY;
       if (openAiApiKey) {
         console.log('Loaded OpenAI api key from env variable');
-        _.set(ConfigurationManager.configData, 'openAi.apiKey', openAiApiKey);
+        _.set(this.configData, 'openAi.apiKey', openAiApiKey);
       }
     } catch (error) {
       console.error('Failed to load config.yml:' + error);
@@ -39,15 +35,9 @@ export class ConfigurationManager {
   public static getConfig(keyHierarchy: string, defaultValue?: any): any {
     if (!this.configData) {
       console.warn("Config not loaded. Call 'loadConfig' first.");
-      return defaultValue !== undefined ? defaultValue : null;
+      return defaultValue ?? null;
     }
 
-    const value = _.get(this.configData, keyHierarchy);
-
-    if (value !== undefined) {
-      return value;
-    } else {
-      return defaultValue;
-    }
+    return _.get(this.configData, keyHierarchy, defaultValue);
   }
 }
