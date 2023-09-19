@@ -11,7 +11,7 @@ describe('OpenAiService', () => {
   beforeAll(async () => {
     // Load config.example.yml into ConfigurationManager
     const yamlString = fs.readFileSync(
-      path.resolve(__dirname, '../../../config.example.yml'),
+      path.resolve(__dirname, '../../../config.yml'),
       'utf8',
     );
     await ConfigurationManager.loadConfig(yamlString);
@@ -24,12 +24,13 @@ describe('OpenAiService', () => {
     expect(openaiInstance).toBeInstanceOf(OpenAiService);
   });
 
-  it('should get completion from OpenAI', async () => {
-    const content = 'Hello';
-    const result = await openaiInstance.getCompletion(content);
-    console.log(JSON.stringify(result, null, 2));
-    expect(result).toHaveProperty('id');
-    expect(result).toHaveProperty('object', 'chat.completion');
-    expect(result).toHaveProperty('choices');
-  }, 30000);
+  // To save API cost, this can be tested manually by running ts-node /.scripts/chatWithGpt.ts
+  // it('should get completion from OpenAI', async () => {
+  //   const content = 'Hello';
+  //   const result = await openaiInstance.getCompletion(content);
+  //   console.log(JSON.stringify(result, null, 2));
+  //   expect(result).toHaveProperty('id');
+  //   expect(result).toHaveProperty('object', 'chat.completion');
+  //   expect(result).toHaveProperty('choices');
+  // }, 30000);
 });

@@ -1,7 +1,7 @@
 // PlayingScreen.tsx
 import React from 'react';
 import {WebView} from 'react-native-webview';
-import Speaker from '../services/Speaker';
+import Speaker from '../services/speaker/Speaker';
 import {StyleSheet, View, Button, Text} from 'react-native';
 import {WebViewMessageEvent} from 'react-native-webview';
 

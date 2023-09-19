@@ -1,3 +1,5 @@
+// chatWithGpt.ts
+
 require('dotenv').config();
 
 import fs from 'fs';
@@ -12,7 +14,7 @@ const DAILY_QUOTA = 1000;
 
 export async function mainLoop() {
   const yamlString = fs.readFileSync(
-    path.resolve(__dirname, '../../../config.example.yml'),
+    path.resolve(__dirname, '../config.yml'),
     'utf8',
   );
   await ConfigurationManager.loadConfig(yamlString);

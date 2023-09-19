@@ -1,5 +1,7 @@
+// App.tsx
+
 import React from 'react';
-import Speaker from './services/Speaker';
+import Speaker from './services/speaker/Speaker';
 import SplashScreen from 'react-native-splash-screen';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
@@ -31,18 +33,44 @@ const App: React.FC = () => {
     const speaker = new Speaker(); //('Hello, Wiki Listen!');
     speaker.setVoice(platformSpecificVoice);
 
+    /**
+     * return config file path in debug mode.
+     * @returns
+     */
+    const getConfigPathInDebugMode = async (): Promise<string | null> => {
+      const confgFileRelativePath =
+        await ConfigurationManager.findConfigFileRecursively(
+          __dirname,
+          'config.yml',
+        );
+      if (!confgFileRelativePath) {
+        return null;
+      }
+      return path.resolve(confgFileRelativePath, './config.yml');
+    };
+
+    /**
+     * Read config file and return the config string
+     * @param isDebugMode
+     * @returns
+     */
+    const getConfigString = async (isDebugMode: boolean): Promise<string> => {
+      if (isDebugMode) {
+        const configPath = await getConfigPathInDebugMode();
+        if (!configPath) {
+          throw new Error('config.yml not found in the project.');
+        }
+        return fs.readFileSync(configPath, 'utf8');
+      } else {
+        const configPath = `${RNFS.MainBundlePath}/config.yml`;
+        return await RNFS.readFile(configPath, 'utf8');
+      }
+    };
+
     const fetchData = async () => {
-      let configString: string;
       const isDebugMode = __DEV__; // __DEV__ is true in debug mode, false in release mode
       // In debug mode, the file is serve by Metro bundler in a different path than release, make sure metro bundler can serve yml.
-      const configPath = isDebugMode
-        ? path.resolve(__dirname, '../../../config.example.yml')
-        : `${RNFS.MainBundlePath}/config.yml`;
-      if (!isDebugMode) {
-        configString = await RNFS.readFile(configPath, 'utf8');
-      } else {
-        configString = fs.readFileSync(configPath, 'utf8');
-      }
+      const configString = await getConfigString(isDebugMode);
 
       await ConfigurationManager.loadConfig(configString);
 

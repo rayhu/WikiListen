@@ -1,3 +1,4 @@
+// Speaker.ts
 import Tts from 'react-native-tts';
 
 class Speaker {

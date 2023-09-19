@@ -1,6 +1,20 @@
 import {ConfigurationManager} from '../ConfigurationManager'; // Adjust the path accordingly
 // import yaml from 'js-yaml';
 // import _ from 'lodash';
+import * as fs from 'fs';
+import * as path from 'path';
+
+// Mock the fs.promises.readdir function
+jest.mock('fs', () => {
+  const originalFs = jest.requireActual('fs');
+  return {
+    ...originalFs,
+    promises: {
+      ...originalFs.promises,
+      readdir: jest.fn(),
+    },
+  };
+});
 
 describe('ConfigurationManager', () => {
   afterEach(() => {
@@ -62,6 +76,37 @@ describe('ConfigurationManager', () => {
         'defaultValue',
       );
       expect(result).toBe('defaultValue');
+    });
+  });
+
+  describe('findConfigFileRecursively', () => {
+    it('should find the config file in the specified folder', async () => {
+      const mockFolder = '/mock/folder';
+      const mockFile = 'config.yml';
+
+      (
+        fs.promises.readdir as jest.MockedFunction<typeof fs.promises.readdir>
+      ).mockResolvedValueOnce([{isFile: () => true, name: mockFile} as any]);
+
+      const result = await ConfigurationManager.findConfigFileRecursively(
+        mockFolder,
+      );
+      expect(result).toBe(mockFolder);
+    });
+
+    it('should return an empty string if the config file is not found within 5 levels', async () => {
+      const mockFolder = '/mock/folder';
+      const mockFile = 'config.yml';
+
+      (fs.promises.readdir as jest.Mock).mockResolvedValue([
+        {isFile: () => false, name: 'not-the-config-file'} as any,
+      ]);
+
+      const result = await ConfigurationManager.findConfigFileRecursively(
+        mockFolder,
+        mockFile,
+      );
+      expect(result).toBe('');
     });
   });
 });

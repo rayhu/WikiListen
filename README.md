@@ -34,6 +34,30 @@ When both are present, the dotenv file has higher priority.
 
 Don't commit your apiKey. Both the config.yml and the .env file is ignored by git.
 
+You can run the chatWithGpt.ts directly after provided your apiKey.
+
+```
+npm install -g ts-node typescript
+ts-node /.scripts/chatWithGpt.ts
+```
+
+```
+ts-node .\scripts\chatWithGpt.ts
+Loaded OpenAI api key from env variable
+Please enter the content prompt: Hello, are you chatgpt? What version are you?
+[
+  {
+    index: 0,
+    message: {
+      role: 'assistant',
+      content: 'Hello! Yes, I am GPT-3, the third version of the Generative Pre-trained Transformer (GPT) developed by OpenAI. How can I assist you today?'
+    },
+    finish_reason: 'stop'
+  }
+]
+Please enter the content prompt:
+```
+
 ### Step 1: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
