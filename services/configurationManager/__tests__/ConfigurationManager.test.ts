@@ -1,6 +1,6 @@
 import {ConfigurationManager} from '../ConfigurationManager'; // Adjust the path accordingly
-import yaml from 'js-yaml';
-import _ from 'lodash';
+// import yaml from 'js-yaml';
+// import _ from 'lodash';
 
 describe('ConfigurationManager', () => {
   afterEach(() => {

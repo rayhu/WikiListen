@@ -1,15 +1,34 @@
+// PlayingScreen.tsx
 import React from 'react';
 import {WebView} from 'react-native-webview';
 import Speaker from '../services/Speaker';
 import {StyleSheet, View, Button, Text} from 'react-native';
+import {WebViewMessageEvent} from 'react-native-webview';
 
-const PlayingScreen = ({route, navigation}) => {
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+
+type PlayingScreenRouteProp = RouteProp<
+  Record<string, object | undefined>,
+  'Playing'
+>;
+
+type PlayingScreenNavigationProp = StackNavigationProp<
+  Record<string, object | undefined>,
+  'Playing'
+>;
+
+type Props = {
+  route: PlayingScreenRouteProp;
+  navigation: PlayingScreenNavigationProp;
+};
+
+const PlayingScreen: React.FC<Props> = ({route, navigation}) => {
   // const {articleId} = route.params;
   let parent = navigation.getParent();
-  if (!parent) {
-    parent = 'Root';
-  }
-  console.log(`Parent ${parent}, current location: ${route.name}`);
+  console.log(`Current location: ${route.name}`);
+  console.log('Parent object is:');
+  console.log(JSON.stringify(parent, null, 2));
   const [url, setUrl] = React.useState(
     'https://en.wikipedia.org/wiki/Main_Page',
   );
@@ -37,7 +56,7 @@ const PlayingScreen = ({route, navigation}) => {
 
   const speaker = new Speaker();
 
-  const onMessage = event => {
+  const onMessage = (event: WebViewMessageEvent) => {
     const textWithLineBreaks = event.nativeEvent.data.replace(/\|n\|/g, '\n');
     textOnCurrentPage = textWithLineBreaks.split('. ');
     if (!playing) {

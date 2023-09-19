@@ -27,7 +27,7 @@ jobs:
       run: npx tsc --noEmit
 
     - name: Run tests
-      run: npm test -- --coverage
+      run: npm test -- --silent --coverage
 
     - name: Upload coverage to GitHub Artifacts
       uses: actions/upload-artifact@v2
