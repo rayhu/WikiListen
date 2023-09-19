@@ -17,7 +17,7 @@ export async function mainLoop() {
   );
   await ConfigurationManager.loadConfig(yamlString);
 
-  const service = OpenAiService.getInstance(ConfigurationManager);
+  const openAiInstance = OpenAiService.getInstance(ConfigurationManager);
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -43,7 +43,7 @@ export async function mainLoop() {
       break;
     }
 
-    const completion = await service.getCompletion(content);
+    const completion = await openAiInstance.getCompletion(content);
     requestsToday++;
     console.log(completion.choices);
   }

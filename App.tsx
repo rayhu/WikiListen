@@ -51,10 +51,10 @@ const App: React.FC = () => {
         'davinci',
       );
 
-      const OpenAiService = OpenAiService.getInstance(ConfigurationManager);
+      const openAiInstance = OpenAiService.getInstance(ConfigurationManager);
 
       let content = 'Say chatGpt welcomes you.';
-      let result = await OpenAiService.getCompletion(content, model);
+      let result = await openAiInstance.getCompletion(content, model);
       console.log(
         `received completion result: ${JSON.stringify(result, null, 2)}`,
       );
