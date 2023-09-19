@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 
 import * as readline from 'readline';
-import {OpenAIService} from '../services/openAi/OpenAiService';
+import {OpenAiService} from '../services/openAi/OpenAiService';
 import {promptUser} from './promptUser';
 import {ConfigurationManager} from '../services/configurationManager/ConfigurationManager';
 
@@ -17,7 +17,7 @@ export async function mainLoop() {
   );
   await ConfigurationManager.loadConfig(yamlString);
 
-  const service = OpenAIService.getInstance(ConfigurationManager);
+  const service = OpenAiService.getInstance(ConfigurationManager);
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,

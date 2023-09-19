@@ -12,7 +12,7 @@ import RNFS from 'react-native-fs';
 import fs from 'fs';
 import path from 'path';
 
-import {OpenAIService} from './services/openAi/OpenAIService';
+import {OpenAiService} from './services/openAi/OpenAiService';
 import {ConfigurationManager} from './services/configurationManager/ConfigurationManager';
 
 const platformSpecificVoice = Platform.select({
@@ -51,10 +51,10 @@ const App: React.FC = () => {
         'davinci',
       );
 
-      const openAIService = OpenAIService.getInstance(ConfigurationManager);
+      const OpenAiService = OpenAiService.getInstance(ConfigurationManager);
 
       let content = 'Say chatGpt welcomes you.';
-      let result = await openAIService.getCompletion(content, model);
+      let result = await OpenAiService.getCompletion(content, model);
       console.log(
         `received completion result: ${JSON.stringify(result, null, 2)}`,
       );
