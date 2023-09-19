@@ -51,18 +51,19 @@ jobs:
           security find-identity -v -p codesigning
           ls -l ~/Library/MobileDevice/Provisioning\ Profiles          
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'yarn'
+      - name: Install volta
+        uses: volta-cli/action@v4
+  
+      - name: Clean Install dependencies
+        run: npm ci
 
       - name: Enable Corepack
         run: corepack enable
 
-      - name: install yarn dependencies
+      - name: clean install dependencies
         run:  |
           cd packages/app-mobile/ios
-          yarn install          
+          npm ci          
 
       - name: install Cocoapod dependencies
         run: |
