@@ -1,8 +1,8 @@
 import OpenAI from 'openai';
 import Bottleneck from 'bottleneck';
 import {ConfigurationManager} from '../configurationManager/ConfigurationManager';
-export class OpenAIService {
-  private static instance: OpenAIService | null = null;
+export class OpenAiService {
+  private static instance: OpenAiService | null = null;
 
   // inject the ConfigManager class which has a few static methods
   private ConfigManager: typeof ConfigurationManager;
@@ -26,9 +26,9 @@ export class OpenAIService {
 
   public static getInstance(
     ConfigManager: typeof ConfigurationManager,
-  ): OpenAIService {
+  ): OpenAiService {
     if (!this.instance) {
-      this.instance = new OpenAIService(ConfigManager);
+      this.instance = new OpenAiService(ConfigManager);
     }
     return this.instance;
   }

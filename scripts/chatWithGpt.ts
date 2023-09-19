@@ -1,14 +1,25 @@
+// chatWithGpt.ts
+
+require('dotenv').config();
+
+import fs from 'fs';
+import path from 'path';
+
 import * as readline from 'readline';
-import {OpenAIService} from '../services/openAi/OpenAiService';
+import {OpenAiService} from '../services/openAi/OpenAiService';
 import {promptUser} from './promptUser';
 import {ConfigurationManager} from '../services/configurationManager/ConfigurationManager';
 
 const DAILY_QUOTA = 1000;
 
 export async function mainLoop() {
-  await ConfigurationManager.loadConfig();
+  const yamlString = fs.readFileSync(
+    path.resolve(__dirname, '../config.yml'),
+    'utf8',
+  );
+  await ConfigurationManager.loadConfig(yamlString);
 
-  const service = OpenAIService.getInstance();
+  const openAiInstance = OpenAiService.getInstance(ConfigurationManager);
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -34,7 +45,7 @@ export async function mainLoop() {
       break;
     }
 
-    const completion = await service.getCompletion(content);
+    const completion = await openAiInstance.getCompletion(content);
     requestsToday++;
     console.log(completion.choices);
   }

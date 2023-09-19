@@ -1,5 +1,7 @@
 import yaml from 'js-yaml';
 import _ from 'lodash';
+import * as fs from 'fs';
+import * as path from 'path';
 
 export class ConfigurationManager {
   private constructor() {} // Ensure this class cannot be instantiated
@@ -39,5 +41,33 @@ export class ConfigurationManager {
     }
 
     return _.get(this.configData, keyHierarchy, defaultValue);
+  }
+  public static async findConfigFileRecursively(
+    startFolder: string,
+    fileName: string = 'config.yml',
+    maxLevels: number = 5,
+  ): Promise<string> {
+    if (maxLevels <= 0) {
+      return ''; // Reached the maximum level limit without finding the file
+    }
+
+    const dirents = await fs.promises.readdir(startFolder, {
+      withFileTypes: true,
+    });
+
+    // Check if the file exists in the current directory
+    for (const dirent of dirents) {
+      if (dirent.isFile() && dirent.name === fileName) {
+        return startFolder;
+      }
+    }
+
+    // If not found, move up one directory and search again
+    const parentFolder = path.join(startFolder, '..');
+    return this.findConfigFileRecursively(
+      parentFolder,
+      fileName,
+      maxLevels - 1,
+    );
   }
 }

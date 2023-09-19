@@ -11,9 +11,27 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+
+type SearchScreenRouteProp = RouteProp<
+  Record<string, object | undefined>,
+  'Search'
+>;
+
+type SearchScreenNavigationProp = StackNavigationProp<
+  Record<string, object | undefined>,
+  'Search'
+>;
+
+type Props = {
+  route: SearchScreenRouteProp;
+  navigation: SearchScreenNavigationProp;
+};
+
 import {SearchBar} from 'react-native-elements';
 
-const SearchScreen = ({navigation}) => {
+const SearchScreen: React.FC<Props> = ({navigation}) => {
   const [continuousPlay, setContinuousPlay] = React.useState(false);
 
   const toggleContinuousPlay = () => {
@@ -21,8 +39,7 @@ const SearchScreen = ({navigation}) => {
   };
 
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [searchResults, setSearchResults] = React.useState([]);
-
+  const [searchResults, setSearchResults] = React.useState<string[]>([]);
   const handleSearch = () => {
     // Handle the search query here
     console.log(`Searching for ${searchQuery}`);
@@ -45,7 +62,7 @@ const SearchScreen = ({navigation}) => {
       <Text>Search Wikipedia Articles</Text>
       <SearchBar
         placeholder="enter title or keywords"
-        onChangeText={setSearchQuery}
+        onChangeText={setSearchQuery as any}
         onSubmitEditing={handleSearch}
         value={searchQuery}
       />

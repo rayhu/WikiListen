@@ -1,4 +1,4 @@
-# please copy config.example.yml to .cred folder and make changes
+# please copy config.example.yml to config.yml and make changes
 
 version: 1.0
 
