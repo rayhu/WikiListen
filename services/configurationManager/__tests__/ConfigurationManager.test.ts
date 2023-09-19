@@ -2,7 +2,6 @@ import {ConfigurationManager} from '../ConfigurationManager'; // Adjust the path
 // import yaml from 'js-yaml';
 // import _ from 'lodash';
 import * as fs from 'fs';
-import * as path from 'path';
 
 // Mock the fs.promises.readdir function
 jest.mock('fs', () => {
