@@ -1,0 +1,16 @@
+# please copy config.example.yml to config.yml and make changes
+
+version: 1.0
+
+openAi:
+  apiKey: "Your API KEY Here"
+  chatGpt:
+    defaultModel: "gpt-3.5-turbo"
+  rateLimiter:
+    minTime: 10000 # 10 seconds
+    maxConcurrent: 1
+
+voice:
+  default:
+    ios: 'com.apple.voice.compact.en-US.Samantha'
+    android: 'en-us-x-tpf-local'
