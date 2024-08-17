@@ -22,7 +22,7 @@ class Speaker {
     return await Tts.voices();
   }
 
-  setVoice(voice) {
+  setVoice(voice?: string) {
     if (!voice) {
       return;
     }
@@ -53,7 +53,7 @@ class Speaker {
     }
   }
 
-  onSpeechFinish(event) {
+  onSpeechFinish(event: any) {
     // Handle the event here
     console.log('Speech finished', event);
   }
