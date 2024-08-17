@@ -87,6 +87,12 @@ android {
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
+        },
+        release {
+            storeFile file('wikilisten.keystore')
+            storePassword 'Online123!'
+            keyAlias 'wikilisten'
+            keyPassword 'Online123!'
         }
     }
     buildTypes {
