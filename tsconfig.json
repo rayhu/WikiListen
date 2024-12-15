@@ -5,5 +5,5 @@
     "types": ["node", "react-native", "jest"]
   },
   "typeRoots": ["./types", "./node_modules/@types"],
-  "outDir": "./build/js",
+  "outDir": "./build/js"
 }

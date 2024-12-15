@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
 import Bottleneck from 'bottleneck';
-import { config } from "../../config/config";
+import {config} from '../../config/config';
 
 export class OpenAiService {
   private static instance: OpenAiService | null = null;
@@ -15,7 +15,7 @@ export class OpenAiService {
   private rateLimiterConfig = config.openAi.rateLimiter;
 
   constructor() {
-    this.openai = new OpenAI({ apiKey: this.apiKey });
+    this.openai = new OpenAI({apiKey: this.apiKey});
 
     const limiter = new Bottleneck(this.rateLimiterConfig);
     this.rateLimitedCompletion = limiter.wrap(this.completion.bind(this));
@@ -33,7 +33,7 @@ export class OpenAiService {
     model: string = config.openAi.defaultModel || 'gpt-4o',
   ): Promise<OpenAI.Chat.ChatCompletion> {
     return this.openai.chat.completions.create({
-      messages: [{ role: 'user', content }],
+      messages: [{role: 'user', content}],
       model,
     });
   }

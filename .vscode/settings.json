@@ -1,11 +1,8 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive",
-    "cSpell.words": [
-        "openai",
-        "wikilisten"
-    ],
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-      },      
-    "java.compile.nullAnalysis.mode": "automatic"
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "cSpell.words": ["openai", "wikilisten"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "java.compile.nullAnalysis.mode": "automatic"
 }

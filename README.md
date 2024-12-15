@@ -14,7 +14,7 @@ This project is based on the [**React Native**](https://reactnative.dev), with m
 ![Android Build](https://github.com/rayhu/WikiListen/actions/workflows/android_build.yml/badge.svg?event=push)
 ![iOS Build](https://github.com/rayhu/WikiListen/actions/workflows/ios_build.yml/badge.svg?event=push)
 
->**Note**: Make sure you install the necessary software into your computer according to [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+> **Note**: Make sure you install the necessary software into your computer according to [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
 You need an openAi API token to talk to chatgpt.
 After you register with openAi and obtained your token,
@@ -114,16 +114,16 @@ If you can't get this to work, see the [Troubleshooting](https://reactnative.dev
 
 ## TODO list
 
-* SearchBar in React-Native-Elements
+- SearchBar in React-Native-Elements
 
 The react-native-elements's latest stable version (3.4.3) has the SearchBar type broken.
 The default props are not respected.
-Upgraded to 4.0.0-rc.2 which solved this issue. 
+Upgraded to 4.0.0-rc.2 which solved this issue.
 Please upgrade to right version when it has an official release.
 
 <https://www.npmjs.com/package/react-native-elements?activeTab=versions>
 
-* React-Native-TTS doesn't have handle events well.
+- React-Native-TTS doesn't have handle events well.
 
 The design is to speak a full sentence, once it is done (received tts.finished event), the tts will speak the next sentence.
 If user requests stop, it will remove the event handler, so that the app will not be cut off.

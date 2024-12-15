@@ -3,9 +3,9 @@
 version: 1.0
 
 openAi:
-  apiKey: "Your API KEY Here"
+  apiKey: 'Your API KEY Here'
   chatGpt:
-    defaultModel: "gpt-3.5-turbo"
+    defaultModel: 'gpt-3.5-turbo'
   rateLimiter:
     minTime: 10000 # 10 seconds
     maxConcurrent: 1
