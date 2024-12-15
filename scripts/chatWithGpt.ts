@@ -2,24 +2,14 @@
 
 require('dotenv').config();
 
-import fs from 'fs';
-import path from 'path';
-
 import * as readline from 'readline';
 import {OpenAiService} from '../services/openAi/OpenAiService';
 import {promptUser} from './promptUser';
-import {ConfigurationManager} from '../services/configurationManager/ConfigurationManager';
 
 const DAILY_QUOTA = 1000;
 
 export async function mainLoop() {
-  const yamlString = fs.readFileSync(
-    path.resolve(__dirname, '../config.yml'),
-    'utf8',
-  );
-  await ConfigurationManager.loadConfig(yamlString);
-
-  const openAiInstance = OpenAiService.getInstance(ConfigurationManager);
+  const openAiInstance = OpenAiService.getInstance();
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,

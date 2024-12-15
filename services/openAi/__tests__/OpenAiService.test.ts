@@ -1,23 +1,12 @@
 require('dotenv').config();
 
-import fs from 'fs';
-import path from 'path';
-
 import {OpenAiService} from '../OpenAiService';
-import {ConfigurationManager} from '../../configurationManager/ConfigurationManager';
 
 describe('OpenAiService', () => {
   let openaiInstance: OpenAiService;
-  beforeAll(async () => {
-    // Load config.example.yml into ConfigurationManager
-    const yamlString = fs.readFileSync(
-      path.resolve(__dirname, '../../../config.yml'),
-      'utf8',
-    );
-    await ConfigurationManager.loadConfig(yamlString);
-  });
+  beforeAll(async () => {});
   beforeEach(() => {
-    openaiInstance = OpenAiService.getInstance(ConfigurationManager);
+    openaiInstance = OpenAiService.getInstance();
   });
 
   it('should create an instance of OpenAiService', () => {

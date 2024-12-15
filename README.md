@@ -6,7 +6,7 @@ Combined with ChatGPT APIs, it finds nearby locations, pick content for you to l
 
 User can also interact with the AI bot to pickup favorite content to listen to.
 
-This project is based on the [**React Native**](https://reactnative.dev), using the cli tool [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+This project is based on the [**React Native**](https://reactnative.dev), with metro, using the cli tool [`@react-native-community/cli`](https://github.com/react-native-community/cli). No Expo used.
 
 ## Developer Getting Started
 
@@ -21,29 +21,26 @@ After you register with openAi and obtained your token,
 save it to the .env file in the root of the repo.
 This repo uses dotenv package to load environment variables from the ".env" file.
 
-Sample content of .env.
+Sample content of env.js.
 
 ```bash
-OPENAI_API_KEY=sk-.....
+export const OPENAI_API_KEY = 'default_openai_api_key';
+export const ANTHROPIC_API_KEY = 'default_anthropic_api_key';
+export const GOOGLE_API_KEY = 'default_google_api_key';
+export const SERVER_API_KEY = 'default_server_api_key';
+export const SERVER_URL = 'default_server_url';
 ```
-
-It loads the value to process.env.OPENAI_API_KEY, this key is then loaded into the ConfigurationManager class.
-
-You can also copy the config.example.yml to config.yml and add apiKey to it.
-When both are present, the dotenv file has higher priority.
-
-Don't commit your apiKey. Both the config.yml and the .env file is ignored by git.
 
 You can run the chatWithGpt.ts directly after provided your apiKey.
 
 ```
 npm install -g ts-node typescript
-ts-node /.scripts/chatWithGpt.ts
+tsc scripts/chatWithGpt.ts
 ```
 
 ```
-ts-node .\scripts\chatWithGpt.ts
-Loaded OpenAI api key from env variable
+tsc .\scripts\chatWithGpt.ts
+
 Please enter the content prompt: Hello, are you chatgpt? What version are you?
 [
   {

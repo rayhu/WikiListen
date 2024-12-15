@@ -1,11 +1,9 @@
 import OpenAI from 'openai';
 import Bottleneck from 'bottleneck';
-import {ConfigurationManager} from '../configurationManager/ConfigurationManager';
+import { config } from "../../config/config";
+
 export class OpenAiService {
   private static instance: OpenAiService | null = null;
-
-  // inject the ConfigManager class which has a few static methods
-  private ConfigManager: typeof ConfigurationManager;
 
   private openai: OpenAI;
   private rateLimitedCompletion: (
@@ -13,35 +11,29 @@ export class OpenAiService {
     model?: string,
   ) => Promise<OpenAI.Chat.ChatCompletion>;
 
-  private constructor(ConfigManager: typeof ConfigurationManager) {
-    this.ConfigManager = ConfigManager;
-    const apiKey = this.ConfigManager.getConfig('openAi.apiKey');
-    const rateLimiterConfig =
-      this.ConfigManager.getConfig('openAi.rateLimiter');
-    this.openai = new OpenAI({apiKey});
+  private apiKey = config.openAi.apiKey;
+  private rateLimiterConfig = config.openAi.rateLimiter;
 
-    const limiter = new Bottleneck(rateLimiterConfig);
+  constructor() {
+    this.openai = new OpenAI({ apiKey: this.apiKey });
+
+    const limiter = new Bottleneck(this.rateLimiterConfig);
     this.rateLimitedCompletion = limiter.wrap(this.completion.bind(this));
   }
 
-  public static getInstance(
-    ConfigManager: typeof ConfigurationManager,
-  ): OpenAiService {
+  public static getInstance(): OpenAiService {
     if (!this.instance) {
-      this.instance = new OpenAiService(ConfigManager);
+      this.instance = new OpenAiService();
     }
     return this.instance;
   }
 
   private async completion(
     content: string,
-    model: string = this.ConfigManager.getConfig(
-      'openAi.defaultModel',
-      'gpt-3.5-turbo',
-    ),
+    model: string = config.openAi.defaultModel || 'gpt-4o',
   ): Promise<OpenAI.Chat.ChatCompletion> {
     return this.openai.chat.completions.create({
-      messages: [{role: 'user', content}],
+      messages: [{ role: 'user', content }],
       model,
     });
   }
